@@ -1,0 +1,66 @@
+@import '../../../../shared/styles/mixing';
+.location-weather-details {
+    @include sm {
+        border: 1px solid black;
+        padding: 20px 20px 40px 20px;
+    }
+    .location-info {
+        .current-weather {
+            margin-bottom: 10px;
+        }
+    }
+    .current-weather,
+    .actions {
+        text-align: center;
+    }
+    .actions {
+        min-height: 31px;
+        .favourite {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+    @include sm {
+        .location-info {
+            display: flex;
+            justify-content: space-between;
+            .current-weather {
+                display: flex;
+                .phrase-icon {
+                    margin-right: 10px;
+                }
+                .location {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: left;
+                }
+            }
+        }
+    }
+    .now-phrase-title {
+        text-align: center;
+        margin: 50px 0;
+        @include sm {
+            margin: 100px 0;
+        }
+    }
+    .weekly-forecast {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        app-daily-forecast {
+            flex: 1;
+        }
+        @include sm {
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            app-daily-forecast {
+                margin-right: 20px;
+            }
+            app-daily-forecast:last-child {
+                margin: 0;
+            }
+        }
+    }
+}

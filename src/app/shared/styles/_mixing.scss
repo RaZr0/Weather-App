@@ -1,0 +1,31 @@
+// Mobile landscape 
+$sm:480px;
+$md:768px;
+$lg:992px;
+$xl:1200px;
+@mixin sm {
+    @media (min-width: $sm) {
+        @content;
+    }
+}
+
+// Tablet portait
+@mixin md {
+    @media (min-width: $md) {
+        @content;
+    }
+}
+
+// Tablet landscape
+@mixin lg {
+    @media (min-width: $lg) {
+        @content;
+    }
+}
+
+// Laptop & desktop displays
+@mixin xl {
+    @media (min-width: $xl) {
+        @content;
+    }
+}

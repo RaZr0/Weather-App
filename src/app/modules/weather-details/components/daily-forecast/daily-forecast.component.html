@@ -1,0 +1,6 @@
+<div class="daily-forecast">
+    <div class="day-info" *ngIf="dailyForecast">
+        <span class="name">{{dailyForecast.date | dateDayName}}</span>
+        <span class="temperature">{{dailyForecast.temperature.value  | temperature:dailyForecast.temperature.unit}}</span>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+.favourite-location {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 2px solid black;
+    cursor: pointer;
+    padding: 20px;
+    .name {
+        margin-bottom: 5px;
+    }
+    .temperature {
+        margin-bottom: 30px;
+    }
+}

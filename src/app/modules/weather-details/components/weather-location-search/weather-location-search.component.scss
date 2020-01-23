@@ -1,0 +1,31 @@
+.weather-location-search {
+    .location-form {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        .form-group {
+            margin: 0;
+        }
+        .input-wrapper {
+            max-width: 360px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            min-height: 54px;
+            .weather-location-filter {
+                width: 100%;
+                border: 2px solid black;
+                padding-left: 25px;
+            }
+            .search-icon {
+                position: absolute;
+                left: 5px;
+                top: 7px;
+            }
+        }
+    }
+    .error {
+        color: red;
+        display: block;
+    }
+}

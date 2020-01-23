@@ -1,0 +1,21 @@
+<div class="location-weather-details" *ngIf="weatherConditionData">
+    <div class="location-info">
+        <div class="current-weather">
+            <img class="phrase-icon" src="https://developer.accuweather.com/sites/default/files/{{weatherConditionData.WeatherIcon}}-s.png" alt="">
+            <div class="location">
+                <span class="name">{{weatherLocation.name}}</span>
+                <span class="temperature">{{weatherConditionData.Temperature.Metric.Value | temperature:weatherConditionData.Temperature.Metric.Unit}}</span>
+            </div>
+        </div>
+        <div class="actions">
+            <a class="favourite" *ngIf="isInfavourites" href="javascript:void()" (click)="removeFromfavourites()">
+                <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Drawn_heart.svg/32px-Drawn_heart.svg.png" alt="">
+            </a>
+            <button [disabled]="isInfavourites" class="add-to-favourites" (click)="addTofavourites()">Add to Favourites</button>
+        </div>
+    </div>
+    <h2 class="now-phrase-title">{{weatherConditionData.WeatherText}}</h2>
+    <div class="weekly-forecast">
+        <app-daily-forecast [dailyForecast]="dailyForecast" *ngFor="let dailyForecast of dailyForecasts"></app-daily-forecast>
+    </div>
+</div>

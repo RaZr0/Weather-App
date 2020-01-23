@@ -1,0 +1,16 @@
+<div class="weather-location-search">
+    <form class="location-form">
+        <div class="form-group">
+            <div class="input-wrapper">
+                <input class="weather-location-filter" type="text" placeholder="Search for a location" [formControl]="weatherLocationControl" [matAutocomplete]="auto">
+                <i class="search-icon fas fa-search"></i>
+                <span *ngIf="!weatherLocationControl.valid" class="error">Please enter only english letters</span>
+            </div>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+                <mat-option *ngFor="let weatherLocation of filteredWeatherLocations" [value]="weatherLocation">
+                    {{weatherLocation.LocalizedName}} ({{weatherLocation.Country.LocalizedName}})
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+    </form>
+</div>

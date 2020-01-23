@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  accuWeatherApiKey: '4VqnFOBZAZxIutUyTJPVzkOwJZr1KMNr',
+  accuWeatherApiUrl: 'http://dataservice.accuweather.com'
 };

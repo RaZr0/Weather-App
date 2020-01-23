@@ -1,0 +1,19 @@
+<div class="main-header">
+    <header class="header">
+        <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan" [containerInside]="false">
+            <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['/']">Herolo Weather Task</a></mdb-navbar-brand>
+            <links>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a [routerLink]="['/']" class="nav-link waves-light" mdbWavesEffect>
+                         Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/favourite-locations']" class="nav-link waves-light" mdbWavesEffect>
+                         Favourites</a>
+                    </li>
+                </ul>
+            </links>
+        </mdb-navbar>
+    </header>
+</div>

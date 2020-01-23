@@ -1,0 +1,10 @@
+@import '../../../../shared/styles/mixing';
+.main-layout {
+    .main {
+        margin-top: 20px;
+    }
+    .container {
+        max-width: $xl;
+        margin: 0 auto;
+    }
+}

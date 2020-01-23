@@ -1,0 +1,20 @@
+@import '../../shared/styles/mixing';
+.favourite-locations {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    app-favourite-location {
+        flex: 1;
+    }
+    @include sm {
+        flex-direction: row;
+        flex-wrap: wrap;
+        app-favourite-location {
+            margin-right: 20px;
+        }
+        app-favourite-location:last-child {
+            margin-right: 0;
+        }
+    }
+}

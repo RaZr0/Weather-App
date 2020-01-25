@@ -1,5 +1,5 @@
 <div class="favourite-location" *ngIf="favouriteLocation" (click)="getMoreDetails(favouriteLocation)">
     <span class="name">{{favouriteLocation.name}}</span>
     <span class="temperature">{{favouriteLocation.temperature.value | temperature :favouriteLocation.temperature.unit}}</span>
-    <span class="pharse">{{favouriteLocation.pharse}}</span>
+    <span class="pharse"><strong>{{favouriteLocation.pharse}}</strong></span>
 </div>

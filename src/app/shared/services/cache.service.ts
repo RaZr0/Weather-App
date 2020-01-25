@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { isNullOrUndefined } from 'util';
 
 export class CacheControl {
-  constructor(public key: string, public maxAge?: number) {
+  constructor(public key: string, public maxAge?: Date) {
   }
 }
 
@@ -44,7 +44,7 @@ export class CacheService {
 
   private setAppCacheData<T>(data: T, cacheControl: CacheControl) {
     const appCacheData = this.appCacheData;
-    appCacheData[cacheControl.key] = new CacheData(data, !isNullOrUndefined(cacheControl.maxAge) ? new Date().setSeconds(cacheControl.maxAge) : null);
+    appCacheData[cacheControl.key] = new CacheData(data, !isNullOrUndefined(cacheControl.maxAge) ? cacheControl.maxAge.getTime() : null);
     window.localStorage.setItem(this.appCacheKey, JSON.stringify(appCacheData));
   }
 }

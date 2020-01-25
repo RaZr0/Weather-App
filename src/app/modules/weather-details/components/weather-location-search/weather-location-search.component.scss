@@ -1,3 +1,4 @@
+@import '../../../../shared/styles/mixing';
 .weather-location-search {
     .location-form {
         width: 80%;
@@ -14,18 +15,20 @@
             min-height: 54px;
             .weather-location-filter {
                 width: 100%;
-                border: 2px solid black;
+                border: 2px solid $black;
                 padding-left: 25px;
+                outline: inherit;
             }
             .search-icon {
                 position: absolute;
                 left: 5px;
                 top: 7px;
+                color: $black;
             }
         }
     }
     .error {
-        color: red;
+        color: $red;
         display: block;
     }
 }

@@ -1,20 +1,20 @@
 <div class="location-weather-details" *ngIf="weatherConditionData">
     <div class="location-info">
         <div class="current-weather">
-            <img class="phrase-icon" src="https://developer.accuweather.com/sites/default/files/{{weatherConditionData.WeatherIcon}}-s.png" alt="">
+            <img class="phrase-icon" src="https://developer.accuweather.com/sites/default/files/{{weatherConditionData.WeatherIcon}}-s.png" alt="wather-icon">
             <div class="location">
-                <span class="name">{{weatherLocation.name}}</span>
-                <span class="temperature">{{weatherConditionData.Temperature.Metric.Value | temperature:weatherConditionData.Temperature.Metric.Unit}}</span>
+                <span class="name">{{weatherLocation.name}} </span>
+                <span class="temperature">{{currentTemperatureUnitType === 'C' ? (weatherConditionData.Temperature.Metric.Value | temperature:currentTemperatureUnitType) : (weatherConditionData.Temperature.Imperial.Value | temperature:currentTemperatureUnitType) }}</span>
+                <mat-slide-toggle class="unit-slider" (change)="toogleUnitType($event)">Toggle Unit</mat-slide-toggle>
             </div>
         </div>
         <div class="actions">
-            <a class="favourite" *ngIf="isInfavourites" href="javascript:void()" (click)="removeFromfavourites()">
-                <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Drawn_heart.svg/32px-Drawn_heart.svg.png" alt="">
-            </a>
-            <button [disabled]="isInfavourites" class="add-to-favourites" (click)="addTofavourites()">Add to Favourites</button>
+            <img class="favourite-icon" *ngIf="isInfavourites" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Drawn_heart.svg/32px-Drawn_heart.svg.png" alt="favourite-icon">
+            <button class="favourite-button" (click)="handleFavourite()">{{isInfavourites ? 'Remove from Favourites' : 'Add to Favourites'}}</button>
+
         </div>
     </div>
-    <h2 class="now-phrase-title">{{weatherConditionData.WeatherText}}</h2>
+    <h2 class="now-phrase-title"><strong>{{weatherConditionData.WeatherText}}</strong></h2>
     <div class="weekly-forecast">
         <app-daily-forecast [dailyForecast]="dailyForecast" *ngFor="let dailyForecast of dailyForecasts"></app-daily-forecast>
     </div>

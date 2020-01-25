@@ -1,1 +1,13 @@
-.main-header {}
+.main-header {
+     ::ng-deep {
+        .navbar.navbar-dark .navbar-nav .nav-item.active {
+            background: grey;
+        }
+        .navbar.navbar-dark .navbar-nav .nav-item:not(.active):hover .nav-link {
+            color: red;
+        }
+        .navbar-brand {
+            cursor: default;
+        }
+    }
+}

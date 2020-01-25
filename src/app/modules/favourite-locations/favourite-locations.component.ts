@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FavouriteLocationsService } from '../../shared/services/favourite-locations.service';
 import { WeatherLocation } from 'src/app/shared/models/weather-location.model';
 import { WeatherLocationService } from '../weather-details/services/weather-location.service';
-import { IWeatherCondition } from '../weather-details/interfaces/weather-condition.interface';
-import { Router } from '@angular/router';
 import { FavouriteLocation } from './models/favourite-location';
-import { FavouriteLocationComponent } from './components/favourite-location/favourite-location.component';
+import { MatDialog } from '@angular/material/dialog';
+import { GeneralDialogComponent } from 'src/app/shared/components/dialogs/general-dialog/general-dialog.component';
+import { TechnicalErrorDialogComponent } from 'src/app/shared/components/dialogs/technical-error-dialog/technical-error-dialog.component';
+import { TemperatureUnit } from 'src/app/shared/models/temperature.model';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class FavouriteLocationsComponent implements OnInit {
   constructor(
     private favouriteLocationsService: FavouriteLocationsService,
     private weatherLocationService: WeatherLocationService,
-    private router: Router
+    private dialog: MatDialog
+
   ) { }
 
   ngOnInit() {
@@ -33,18 +35,19 @@ export class FavouriteLocationsComponent implements OnInit {
               {
                 id: favouriteLocation.id,
                 name: favouriteLocation.name,
-                temperature : {unit : res.result[0].Temperature.Metric.Unit , value :  res.result[0].Temperature.Metric.Value},
-                pharse : res.result[0].WeatherText
+                temperature: {unit: <TemperatureUnit>res.result[0].Temperature.Metric.Unit, value: res.result[0].Temperature.Metric.Value },
+                pharse: res.result[0].WeatherText
               }
             );
           else
-            alert('something went wrong..')
+            this.dialog.open(TechnicalErrorDialogComponent);
         });
       })
     }
-    else
-      alert('you have no favourites yet..')
+    else {
+      this.dialog.open(GeneralDialogComponent, {
+        data: { header: 'Favourites', content: 'You have no favourites yet.' }
+      });
+    }
   }
-
-
 }

@@ -1,27 +1,28 @@
 @import '../../../../shared/styles/mixing';
 .location-weather-details {
     @include sm {
-        border: 1px solid black;
         padding: 20px 20px 40px 20px;
+    }
+    @include xl {
+        border: 1px solid $black;
     }
     .location-info {
         .current-weather {
             margin-bottom: 10px;
+            .phrase-icon {
+                height: 45px;
+                width: 75px;
+            }
+            .location {
+                .unit-slider {
+                    margin-left: 20px;
+                    @include sm {
+                        margin-left: 0;
+                    }
+                }
+            }
         }
-    }
-    .current-weather,
-    .actions {
-        text-align: center;
-    }
-    .actions {
-        min-height: 31px;
-        .favourite {
-            display: inline-block;
-            margin-right: 10px;
-        }
-    }
-    @include sm {
-        .location-info {
+        @include sm {
             display: flex;
             justify-content: space-between;
             .current-weather {
@@ -35,6 +36,22 @@
                     text-align: left;
                 }
             }
+        }
+    }
+    .current-weather,
+    .actions {
+        text-align: center;
+    }
+    .actions {
+        .favourite-icon {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .favourite-button {
+            box-shadow: 2px 2px $black;
+            outline: 0;
+            border: 2px solid $black;
+            border-radius: 4px;
         }
     }
     .now-phrase-title {
@@ -57,6 +74,7 @@
             flex-wrap: wrap;
             app-daily-forecast {
                 margin-right: 20px;
+                max-width: 167px;
             }
             app-daily-forecast:last-child {
                 margin: 0;

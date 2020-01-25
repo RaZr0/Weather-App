@@ -1,4 +1,4 @@
-<div class="main-layout">
+<div class="main-layout" [ngClass]="{'bg-dark dark-theme' : layoutService.activeTheme === 'dark'}">
     <app-main-header></app-main-header>
     <main class="main">
         <div class="container">

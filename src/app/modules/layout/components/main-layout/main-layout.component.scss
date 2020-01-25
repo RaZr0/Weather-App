@@ -1,5 +1,9 @@
 @import '../../../../shared/styles/mixing';
 .main-layout {
+    min-height: 100%;
+    &.dark-theme {
+        color: $white;
+    }
     .main {
         margin-top: 20px;
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FavouriteLocation } from '../../models/favourite-location';
-import { WeatherLocation } from 'src/app/shared/models/weather-location.model';
+import { WeatherLocation } from '../../../../shared/models/weather-location.model';
 
 @Component({
   selector: 'app-favourite-location',

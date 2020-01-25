@@ -1,16 +1,15 @@
 <div class="main-header">
     <header class="header">
-        <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan" [containerInside]="false">
-            <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['/']">Herolo Weather Task</a></mdb-navbar-brand>
+        <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark {{layoutService.activeTheme === 'dark' ? 'bg-dark' : 'cyan'}}" [containerInside]="false">
+            <mdb-navbar-brand><a class="navbar-brand" href="javascript:void(0)">Herolo Weather Task</a></mdb-navbar-brand>
             <links>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a [routerLink]="['/']" class="nav-link waves-light" mdbWavesEffect>
-                         Home</a>
+                    <li class="nav-item" *ngFor="let tab of tabs;let ind = index" (click)="setActiveTab(ind)" [ngClass]="{'active' : activeTab === ind}">
+                        <a [routerLink]="[tab.link]" class="nav-link waves-light" mdbWavesEffect>
+                         {{tab.title}}</a>
                     </li>
-                    <li class="nav-item">
-                        <a [routerLink]="['/favourite-locations']" class="nav-link waves-light" mdbWavesEffect>
-                         Favourites</a>
+                    <li class="nav-item nav-link">
+                        <mat-slide-toggle (change)="toogleTheme($event)">Change Theme</mat-slide-toggle>
                     </li>
                 </ul>
             </links>

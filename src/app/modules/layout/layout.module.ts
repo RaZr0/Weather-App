@@ -5,6 +5,7 @@ import { HeaderComponent } from './components/main-layout/header/header.componen
 import { FooterComponent } from './components/main-layout/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { SharedModule } from '../../shared/modules/shared/shared.module';
 
 
 
@@ -13,7 +14,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
   imports: [
     CommonModule,
     RouterModule.forChild([]),
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    SharedModule
   ],
   exports: [
     MainLayoutComponent, HeaderComponent, FooterComponent

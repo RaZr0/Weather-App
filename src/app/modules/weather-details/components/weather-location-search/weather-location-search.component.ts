@@ -6,7 +6,10 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WeatherLocation } from '../../../../shared/models/weather-location.model';
 import { IWeatherLocation } from '../../../../shared/interfaces/weather-location.interface';
-import { WeatherLocationService } from '../../services/weather-location.service';
+import { AccuWeatherService } from 'src/app/shared/services/accu-weather.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TechnicalErrorDialogComponent } from '../../../../shared/components/dialogs/technical-error-dialog/technical-error-dialog.component';
+// import { StateManagementService } from 'src/app/shared/services/state-management.service';
 
 @Component({
   selector: 'app-weather-location-search',
@@ -22,7 +25,8 @@ export class WeatherLocationSearchComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private weatherLocationService: WeatherLocationService
+    private accuWeatherService: AccuWeatherService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -32,10 +36,6 @@ export class WeatherLocationSearchComponent implements OnInit {
       if (this.weatherLocationControl.valid)
         this.filterCities(value);
     });
-    this.getPageState().subscribe((res) => {
-      if (!res)
-        this.initDefaultLocation('Tel Aviv');
-    })
   }
 
   private filterCities(value: string | IWeatherLocation) {
@@ -48,7 +48,7 @@ export class WeatherLocationSearchComponent implements OnInit {
 
   private getCities(value: string): Observable<IWeatherLocation[]> {
     return new Observable((obs) => {
-      this.weatherLocationService.getCities(value).subscribe((res) => {
+      this.accuWeatherService.getCities(value).subscribe((res) => {
         if (res.statusCode === 200) {
           if (res.result.length > 0)
             obs.next(res.result);
@@ -56,7 +56,7 @@ export class WeatherLocationSearchComponent implements OnInit {
             console.warn("no cities found.");
         }
         else
-          alert('something went wrong..')
+          this.dialog.open(TechnicalErrorDialogComponent);
       })
     })
   }
@@ -68,13 +68,6 @@ export class WeatherLocationSearchComponent implements OnInit {
   }
 
 
-  initDefaultLocation(cityName: string) {
-    this.getCities(cityName).subscribe((res) => {
-      if (res && res.length > 0)
-        this.updatePageState(new WeatherLocation(res[0].Key, res[0].LocalizedName));
-    });
-  }
-
   private updatePageState(weatherLocation: WeatherLocation) {
     this.router.navigate(
       [],
@@ -83,13 +76,5 @@ export class WeatherLocationSearchComponent implements OnInit {
         queryParams: { weatherLocation: JSON.stringify(weatherLocation) },
         queryParamsHandling: 'merge',
       });
-  }
-
-  private getPageState(): Observable<WeatherLocation> {
-    return new Observable((obs) => {
-      const queryParams = this.activatedRoute.snapshot.queryParams;
-      const weatherLocation = queryParams.weatherLocation ? JSON.parse(queryParams.weatherLocation) : null;
-      obs.next(weatherLocation);
-    })
   }
 }

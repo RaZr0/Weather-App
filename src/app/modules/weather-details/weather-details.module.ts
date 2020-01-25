@@ -19,7 +19,7 @@ import { DailyForecastComponent } from './components/daily-forecast/daily-foreca
     MatAutocompleteModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class WeatherDetailsModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DailyForecast } from '../../models/daily-forecast';
+import { TemperatureUnit } from '../../../../shared/models/temperature.model';
 
 @Component({
   selector: 'app-daily-forecast',
@@ -8,8 +9,11 @@ import { DailyForecast } from '../../models/daily-forecast';
 })
 export class DailyForecastComponent implements OnInit {
 
-  @Input() dailyForecast : DailyForecast
-  constructor() { }
+  @Input() dailyForecast: DailyForecast
+
+  constructor() {
+   
+  }
 
   ngOnInit() {
   }

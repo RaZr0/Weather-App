@@ -1,56 +1,69 @@
-// import { Injectable } from '@angular/core';
-// import { Observable, Subject } from 'rxjs';
-// import { Router, ActivationEnd } from '@angular/router';
-// import { filter } from 'rxjs/operators';
-// import { KeyValue } from '@angular/common';
-// import { WeatherLocation } from '../models/weather-location.model';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Router, ActivationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 
-// interface IObserver {
-
-//   key: string;
-//   subject: Subject<any>;
-// }
-
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class StateManagementService {
-//   dictionary: any = {};
-//   stateObservers: IObserver[] = [];
-
-//   constructor(private router: Router) {
-//     const sub = this.router.events.pipe(filter((e) => e instanceof ActivationEnd)).subscribe((e: ActivationEnd) => {
-//       Object.keys(e.snapshot.queryParams).forEach((key) => {
-//         this.dictionary[key] = JSON.parse(e.snapshot.queryParams[key]);
-//       });
-//       sub.unsubscribe();
-//     });
-//   }
-
-//   notifyMe<T>(key: string): Subject<T> {
-//     const subject = new Subject<T>();
-//     this.stateObservers.push({ key: key, subject: subject });
-//     return subject;
-//   }
+interface IState {
+    key: string;
+    subject: BehaviorSubject<any>;
+}
 
 
-//   getState<T>(key: string): Observable<T> {
-//     return new Observable((obs) => {
-//       const stateData = this.dictionary[key];
-//       obs.next(stateData);
-//     });
-//   }
+@Injectable({
+    providedIn: 'root'
+})
+export class StateManagementService {
+    private states: IState[] = [];
 
-//   updateState<T>(key: string, data: T) {
-//     this.dictionary[key] = data;
-//     this.stateObservers.forEach((obs) => {
-//       if (obs.key === key)
-//         obs.subject.next(data);
-//     })
-//     const queryParams = {};
-//     queryParams[key] = JSON.stringify(data);
-//     this.router.navigate([], { queryParamsHandling: 'merge', queryParams: queryParams });
-//   }
-// }
+    constructor(private router: Router) {
+        this.initStates();
+    }
+
+    getState<T>(key: string): BehaviorSubject<T> {
+        let state = this.states.find((obs) => {
+            return obs.key === key;
+        });
+        if (state)
+            return state.subject;
+        return this.addNewState(key, null).subject;
+    }
+
+    updateState<T>(key: string, data: T): Observable<any> {
+        let state = this.states.find((obs) => {
+            return obs.key === key;
+        });
+        return new Observable((obs) => {
+            this.updateRouterState(key, data).then(() => {
+                if (state)
+                    state.subject.next(data);
+                else
+                    this.addNewState(key, data);
+                obs.next();
+            });
+        });
+    }
+
+    private addNewState<T>(key: string, data: T): IState {
+        const newState: IState = { key: key, subject: new BehaviorSubject(data) };
+        this.states.push(newState);
+        return newState;
+    }
+
+
+    private updateRouterState<T>(key: string, data: T): Promise<Boolean> {
+        const queryParams = {};
+        queryParams[key] = JSON.stringify(data);
+        return this.router.navigate([], { queryParamsHandling: 'merge', queryParams: queryParams });
+    }
+
+    private initStates() {
+        const sub = this.router.events.pipe(filter((e) => e instanceof ActivationEnd)).subscribe((e: ActivationEnd) => {
+            Object.keys(e.snapshot.queryParams).forEach((key) => {
+                const stateData = JSON.parse(e.snapshot.queryParams[key]);
+                this.addNewState(key, stateData);
+            });
+            sub.unsubscribe();
+        });
+    }
+}

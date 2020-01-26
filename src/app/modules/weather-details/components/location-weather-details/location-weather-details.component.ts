@@ -12,6 +12,7 @@ import { AccuWeatherService } from '../../../../shared/services/accu-weather.ser
 import { GeoPosition } from 'src/app/shared/models/geo-position.model';
 import { TechnicalErrorDialogComponent } from '../../../../shared/components/dialogs/technical-error-dialog/technical-error-dialog.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { StateManagementService } from '../../../../shared/services/state-management.service';
 
 @Component({
   selector: 'app-location-weather-details',
@@ -32,6 +33,7 @@ export class LocationWeatherDetailsComponent implements OnInit, OnDestroy {
     private favouriteLocationsService: FavouriteLocationsService,
 
     private accuWeatherService: AccuWeatherService,
+    private stateManagementService: StateManagementService,
 
     private router: Router,
     private dialog: MatDialog
@@ -40,8 +42,7 @@ export class LocationWeatherDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.activatedRoute.queryParams.subscribe(queryParams => {
-      const weatherLocation = queryParams.weatherLocation ? JSON.parse(queryParams.weatherLocation) : null;
+    this.sub = this.stateManagementService.getState<WeatherLocation>('weatherLocation').subscribe((weatherLocation)=>{
       if (weatherLocation) {
         this.weatherLocation = weatherLocation;
         this.setCurrentConditions(this.weatherLocation);
@@ -51,7 +52,6 @@ export class LocationWeatherDetailsComponent implements OnInit, OnDestroy {
       else
         this.initDefaultLocation();
     });
-
   }
 
   private setCurrentConditions(weatherLocation: WeatherLocation) {
@@ -108,13 +108,7 @@ export class LocationWeatherDetailsComponent implements OnInit, OnDestroy {
   }
 
   private updatePageState(weatherLocation: WeatherLocation) {
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: { weatherLocation: JSON.stringify(weatherLocation) },
-        queryParamsHandling: 'merge',
-      });
+    this.stateManagementService.updateState('weatherLocation', weatherLocation).subscribe(()=>{});
   }
 
 

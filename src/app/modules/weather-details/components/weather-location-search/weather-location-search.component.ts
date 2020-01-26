@@ -9,7 +9,7 @@ import { IWeatherLocation } from '../../../../shared/interfaces/weather-location
 import { AccuWeatherService } from 'src/app/shared/services/accu-weather.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TechnicalErrorDialogComponent } from '../../../../shared/components/dialogs/technical-error-dialog/technical-error-dialog.component';
-// import { StateManagementService } from 'src/app/shared/services/state-management.service';
+import { StateManagementService } from '../../../../shared/services/state-management.service';
 
 @Component({
   selector: 'app-weather-location-search',
@@ -26,7 +26,8 @@ export class WeatherLocationSearchComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private accuWeatherService: AccuWeatherService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private stateManagementService : StateManagementService
   ) { }
 
   ngOnInit() {
@@ -64,17 +65,8 @@ export class WeatherLocationSearchComponent implements OnInit {
   optionSelected(value: MatAutocompleteSelectedEvent) {
     this.selectedWeatherLocation = value.option.value;
     this.weatherLocationControl.setValue(value.option.value.LocalizedName);
-    this.updatePageState(new WeatherLocation(this.selectedWeatherLocation.Key, this.selectedWeatherLocation.LocalizedName));
-  }
-
-
-  private updatePageState(weatherLocation: WeatherLocation) {
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: { weatherLocation: JSON.stringify(weatherLocation) },
-        queryParamsHandling: 'merge',
-      });
+    this.stateManagementService.updateState('weatherLocation' , new WeatherLocation(this.selectedWeatherLocation.Key, this.selectedWeatherLocation.LocalizedName)).subscribe(()=>{
+      
+    });
   }
 }

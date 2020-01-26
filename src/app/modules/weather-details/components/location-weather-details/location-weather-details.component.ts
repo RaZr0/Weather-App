@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { IWeatherCondition } from '../../interfaces/weather-condition.interface';
 import { WeatherLocation } from '../../../../shared/models/weather-location.model';
 import { FavouriteLocationsService } from 'src/app/shared/services/favourite-locations.service';
-import { DailyForecast } from '../../models/daily-forecast';
+import { DailyForecast } from '../../models/daily-forecast.model';
 import { Temperature, TemperatureUnit } from '../../../../shared/models/temperature.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AccuWeatherService } from '../../../../shared/services/accu-weather.service';

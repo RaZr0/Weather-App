@@ -1,7 +1,7 @@
 <div class="location-weather-details" *ngIf="weatherConditionData">
     <div class="location-info">
         <div class="current-weather">
-            <img class="phrase-icon" src="https://developer.accuweather.com/sites/default/files/{{weatherConditionData.WeatherIcon}}-s.png" alt="wather-icon">
+            <img class="phrase-icon" src="https://developer.accuweather.com/sites/default/files/{{weatherConditionData.WeatherIcon.toString().padStart(2, '0')}}-s.png" alt="wather-icon">
             <div class="location">
                 <span class="name">{{weatherLocation.name}} </span>
                 <span class="temperature">{{currentTemperatureUnitType === 'C' ? (weatherConditionData.Temperature.Metric.Value | temperature:currentTemperatureUnitType) : (weatherConditionData.Temperature.Imperial.Value | temperature:currentTemperatureUnitType) }}</span>

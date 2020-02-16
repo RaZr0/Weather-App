@@ -1,7 +1,7 @@
 <div class="main-header">
     <header class="header">
         <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark {{layoutService.activeTheme === 'dark' ? 'bg-dark' : 'cyan'}}" [containerInside]="false">
-            <mdb-navbar-brand><a class="navbar-brand" href="javascript:void(0)">Herolo Weather Task</a></mdb-navbar-brand>
+            <mdb-navbar-brand><a class="navbar-brand" href="javascript:void(0)">Weather App</a></mdb-navbar-brand>
             <links>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" *ngFor="let tab of tabs;let ind = index" (click)="setActiveTab(ind)" [ngClass]="{'active' : activeTab === ind}">
